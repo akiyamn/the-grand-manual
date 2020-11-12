@@ -1,5 +1,34 @@
 # Linux
+
+## General Desktop
+
+### SDDM autologin
+Config is in `/etc/sddm.conf`
+Could also be in `/etc/sddm.conf.d/autologin.conf`
+
+Change or add the following lines:
+```
+User=usernamehere
+Session=something.desktop
+```
+
+The list of WM/DE names is in `/usr/share/xsession` as filenames.
+
+
+
 ## Server
+
+### PHP Imagick not found
+Install imagick via:
+`sudo apt install libmagickwand-dev imagemagick`
+`sudo apt install php-pear`
+`sudo pecl install imagick`
+
+Make sure all permissions are set properly
+
+### SFTP seup
+With a working ssh, add the follwoing line to `/etc/ssh/sshd_config`
+
 ### Gitea HTTPS setup w/ nginx
 
 Gitea is like GitLab except it doesn't use 4GB+ of fucking RAM.
@@ -162,14 +191,3 @@ Should be a similar story for VirtualBox...
   - `vmware-networks.service` for guest network access
   - `vmware-usbarbitrator.service` for connecting USB devices to guest
   - `vmware-hostd.service` for sharing virtual machines
-## Server related
-### PHP Imagick not found
-Install imagick via:
-`sudo apt install libmagickwand-dev imagemagick`
-`sudo apt install php-pear`
-`sudo pecl install imagick`
-
-Make sure all permissions are set properly
-### SFTP seup
-With a working ssh, add the follwoing line to `/etc/ssh/sshd_config`
-`Subsystem	sftp	/usr/lib/openssh/sftp-server`
