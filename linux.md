@@ -2,6 +2,13 @@
 
 ## General Desktop
 
+### Qtile
+
+#### Qtile groups not in same order as screens.
+Set the monitor you want ot be the first group as the primary monitor.
+Rearrange the HDMI/DP cables to order the rest of the screens.
+
+
 ### SDDM autologin
 Config is in `/etc/sddm.conf`
 Could also be in `/etc/sddm.conf.d/autologin.conf`
@@ -148,7 +155,7 @@ Install `lib32-nvidia-utils`, choose the version appropriate to your kernel.
     - In BeatSaber's specific Wine prefix, you need to add fonts to its fonts folder to display text
 
 ## Capture Card
-- Install the V4L2 plugin for OBS (to record from /dev/video* sources)
+- Install the V4L2 plugin for OBS (to record from /dev/video\* sources)
 - Add a Video Caputre Device
     - Use *anything other than* YUYV
     - Make sure frame rate is 30
@@ -161,6 +168,21 @@ Install `lib32-nvidia-utils`, choose the version appropriate to your kernel.
 - Install OBS
 - Update NVidia proprietary drivers
 - Set NVENC to be enabled in the Output settings
+
+### Save screen settings on proprietary NVidia drivers
+Xorg only looks at one file for the screen configuration.
+This is not nessesarily `/etc/X11/xorg.conf` as it normally would be for some reason with these proprietary drivers.
+
+Where it's looking is shown by typing:
+```bash
+sudo mhwd-gpu
+```
+For my system it was `/etc/X11/mhwd.d/nvidia.conf`.
+
+Use `sudo nvidia-settings` (need root privileges to save to the right location) to change the display settings.
+Save the output file to the path found before.
+
+
 ## Documents
 ### Pandoc
 #### md->pdf Table of Contents
