@@ -44,6 +44,21 @@ This should make CUPS run now on startup.
 
 ## Server
 
+### Static IP in command line
+
+At the bottom of `/etc/dhcpcd.conf`:
+
+```bash
+interface <interface name>
+inform <static ip>
+static routers=<default gateway>
+static domain_name_servers=<DNS IP>
+static domain_search=<Alt DNS IP>
+```
+
+Pretty sure `dhcpcd` needs to be enabled and running
+
+
 ### PHP Imagick not found
 Install imagick via:
 `sudo apt install libmagickwand-dev imagemagick`
