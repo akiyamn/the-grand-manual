@@ -21,7 +21,26 @@ Session=something.desktop
 
 The list of WM/DE names is in `/usr/share/xsession` as filenames.
 
+### Printing
 
+#### Printing a bunch of blank pages or other printing issue
+CUPS (a universal printing service for Linux) need to be installed and enabled to print properly.
+
+`sudo pacman -S cups`
+
+The Arch Wiki has more information about installing cups.
+
+CUPS needs to also be running and enabled otherwise wacky shit may happen, such as constantly printing blank pages etc...
+When using just a WM (as opposed to a desktop environment (DE) such as XFCE or KDE), certain things such as CUPS drivers may not be enabled by default.
+
+**To enable:**
+```bash
+sudo systemctl enable --now cups.service
+```
+This should also enable `cups.socket` and `cups.path`.
+In case it doesn't repeat the above step two separate times with both of those each.
+
+This should make CUPS run now on startup.
 
 ## Server
 
