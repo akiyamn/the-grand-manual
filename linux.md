@@ -42,6 +42,12 @@ In case it doesn't repeat the above step two separate times with both of those e
 
 This should make CUPS run now on startup.
 
+### Default page size for printing
+
+Enter the name of the page size you want in the file `/etc/pagesize`.
+
+For a list of page sizes and other info view `man pagesize`.
+
 ## Server
 
 ### Static IP in command line
