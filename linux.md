@@ -56,9 +56,12 @@ Firstly, try `pacman-key --refresh`. This probably won't work, complaining about
 
 #### Finding the public key
 Take note of the name of the key holder which isn't trusted when you try to use pacman. E.g. `Yui Hirasawa <yhirasawa@archlinux.org>`
+
 You can either:
-    - Search for this guy's public key using a normal search engine
-    - OR `pacman-key -l hirasawa` on a different machine and take note of the long hex string "pub" line.
+
+- Search for this guy's public key using a normal search engine
+- OR `pacman-key -l hirasawa` on a different machine and take note of the long hex string "pub" line.
+  
 Arch Linux lists all of thier trusted key staff on https://archlinux.org/people/trusted-users/. If they're on this list, they are legit and thier public key is listed under "PGP Key"
 Copy at least the first 8 characters (excluding the `0x`). More chars the better though.
 
@@ -66,7 +69,9 @@ Copy at least the first 8 characters (excluding the `0x`). More chars the better
 Arch/Manjaro needs to download the key from somewhere. By default, it should choose a working server for you. But this never seems to work for some reason and no-one on the Internet seems to acknowledge this.
 
 **Here's a big list of key servers: https://sks-keyservers.net/overview-of-pools.php**
+
 The best one for Australians is: `oc.pool.sks-keyservers.net` but apparently it isn't "stable" (of course not)
+
 Another one that worked for me is: `na.pool.sks-keyservers.net`. `eu.` exists too.
 
 #### Adding the key
