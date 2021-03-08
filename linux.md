@@ -2,6 +2,24 @@
 
 ## General Desktop
 
+### Auto detect and mount USBs (in Arch)
+
+Surprisingly in a lot of more stripped down GNU/Linux distros USB drives aren't automatically mounted.
+
+`udisks2` is a program which manages USB drives and `udiskie` uses that program to automatically mount and label removable drives.
+
+```bash
+sudo pacman -Ss udisks2 udiskie
+```
+
+#### On startup
+
+You need to enable `udisks2` and run `udiskie` when your xsession (WM, DE etc...) starts.
+A place to put this could be `~/.xinitrc`, the application startup menu on your DE or the run-on-start script for your standalone WM.
+
+`sudo systemctl enable --now udisks2`
+then put the sh line `udiskie` in your run-on-startup script/application.
+
 ### Qtile
 
 #### Qtile groups not in same order as screens.
