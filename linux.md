@@ -39,6 +39,23 @@ Session=something.desktop
 
 The list of WM/DE names is in `/usr/share/xsession` as filenames.
 
+
+### Emacs
+
+#### Emacs is almost completely transparent for no reason with picom
+For some reason, when only using picom on some computers emacs is like, 10% opacity for some reason.
+None of the config options in `~/.config/picom.conf` seemed to work for me.
+
+Add the following snippet into `~/.emacs.d/init.el`:
+
+```elisp
+ (set-frame-parameter (selected-frame) 'alpha '(97 . 97))
+ (add-to-list 'default-frame-alist '(alpha . (97 . 97)))
+```
+
+Each of the numbers represent a percentage of opacity. The first represents the level when focused, the latter when unfocused.
+I've set both to 97%.
+
 ### Printing
 
 #### Printing a bunch of blank pages or other printing issue
