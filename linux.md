@@ -20,6 +20,43 @@ A place to put this could be `~/.xinitrc`, the application startup menu on your 
 `sudo systemctl enable --now udisks2`
 then put the sh line `udiskie` in your run-on-startup script/application.
 
+### Alacritty colour emoji
+Alacritty by default only allows you to have one monospace font.
+To get colour emoji, you would need to have a backup font provided such as `Noto Emoji Color`. Alacritty does not have this functionality.
+
+First, make sure you install the `Noto Color Emoji` font (or something else that contains colour emoji). On Arch, install: `noto-fonts-emoji`
+
+In your Alacritty config (`~/.config/alacritty/alacritty.yml` for me) change:
+```yaml
+font:
+  normal:
+    family: monospace
+```
+`monospace` just means "use the default font (which ever is the best match for a given character.)"
+
+To see what your system interprets `monospace` as, run:
+```bash
+fc-match -c monospace
+```
+This list is sorted in order of priority. It starts from the top and works its way down.
+You may notice a colour emoji font is at the bottom of the list.
+This can be changed by editing: `~/.config/fontconfig/fonts.conf` and adding the following between `<fontconfig>` tags.
+
+```xml
+<alias>
+  <family>monospace</family>
+    <prefer>
+      <family>Mononoki</family> <!-- your favourite font here -->
+      <family>Noto Color Emoji</family>
+      <family>Noto Emoji</family>
+    </prefer>
+</alias>
+```
+
+Run `fc-cache` to reset the system fonts and restart Alacritty.
+
+Try `echo 💩`.
+
 ### Qtile
 
 #### Qtile groups not in same order as screens.
@@ -83,9 +120,11 @@ Enter the name of the page size you want in the file `/etc/papersize`.
 
 For a list of page sizes and other info view `man papersize`.
 
-### Pacman "uknown key trust" or something like that
+### Pacman "unknown key trust" or something like that
 When trying to update or download a package, one of the gpg keys might not be trusted. (i.e. you don't have it in youir bank of keys)
 Firstly, try `pacman-key --refresh`. This probably won't work, complaining about not finding the keyserver or something.
+
+- `pacman -Sy archlinux-keyring` *might* work.
 
 **The best way is to manually add the key you need.**
 
@@ -116,6 +155,23 @@ Once you have the public key, run the following command with one of the servers:
 E.g.: `sudo pacman-key --keyserver oc.pool.sks-keyservers.net --recv-keys 19AF4A9B`
 
 If it looks like there where no errors, try to update or install that packagae that you were trying to do earlier.
+
+### Pacman is properly messed up
+
+A lot of good troubleshooting tips are on the Arch wiki. [](https://wiki.archlinux.org/title/pacman#Troubleshooting)
+
+Sometimes package maintainers change the names/versions/dependencies of packages. This causes your database to become out of date and fail to update.
+
+Often `pacman -Sy` solves a lot of headaches.
+
+If no mirror services are found, run: `pacman-mirrors -c YOUR_COUNTRY_NAME` to generate new mirrors. You will need to run `pacman -Syu` afterwards.
+
+#### "Failed to commit transaction (conflicting files)" error
+This means that pacman detects a file which is in conflict between multiple packages or versions of a package.
+
+Test what package owns it with: `pacman -Qo /path/to/file`
+
+If only one package owns it (the one you're trying to upgrade) then you can delete those files or rename them. Then try to update again.
 
 ## Server
 
