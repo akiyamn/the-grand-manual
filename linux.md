@@ -56,7 +56,7 @@ This can be changed by editing: `~/.config/fontconfig/fonts.conf` and adding the
 Run `fc-cache` to reset the system fonts and restart Alacritty.
 
 Try `echo 💩`.
-
+   
 ### Qtile
 
 #### Qtile groups not in same order as screens.
@@ -113,6 +113,64 @@ This should also enable `cups.socket` and `cups.path`.
 In case it doesn't repeat the above step two separate times with both of those each.
 
 This should make CUPS run now on startup.
+
+### Japanese (Or other non Latin) IME Input
+
+#### Setup
+Generally you need an IME (such as IBus or Fcitx) to switch between keyboard layouts and input methods.
+The actual input methods for a given language are separate from the IME. You need to install both in order to get the full functionality.
+On desktop environments (KDE, XFCE, etc...) sometimes it is already included and can be fully setup via GUI. Gnome ships IBus by default.
+When using only a WM, things can be more difficult.
+
+Make sure a font for your target language is installed in the system. `noto-fonts` contains characters for heaps of languages.
+More fonts at: https://wiki.archlinux.org/title/Localization
+
+Pick a combination on the table located at: https://wiki.archlinux.org/title/Input_method#IBus .
+A common IME is IBus and IBus+Anthy (via the `ibus-anthy` package) is a common pairing for Japanese input.
+
+#### Environment Variables
+
+Once that is installed, make sure the following environment variables are set on start up:
+```
+GTK_IM_MODULE=ibus
+QT_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+```
+The Arch wiki recommends `/etc/environment` but that didn't work for me.
+
+You can export the variables using bash as follows:
+```bash
+export GTK_IM_MODULE='ibus'
+export QT_IM_MODULE='ibus'
+export XMODIFIERS=@im='ibus'
+```
+
+This can go in the following locations.
+`~/.xinitrc` should work for starting with startx
+`~/.xprofile` should work for starting with a login manager (e.g. LightDM)
+`~/.bashrc` works as a last resort. Only works if bash is your user's prompt.
+There are probably better places to put these declarations
+
+Logout and back in to check if these changes took affect.
+You can check to see if it loaded the variables using the `env` command. They should be listed.
+
+#### Adding Anthy to IBus
+
+Ibus can be started as a daeman as follows:
+`ibus-daemon -drxR`
+It should appear in your system tray if you have one. Right click it and go to "Preferences".
+*(If not, try running `ibus-setup`.)*
+
+Under "Input Method" click "Add" go into your desired language (for me, Japanese) and click on your IME (for me, Anthy).
+Then close the settings menu.
+
+`CTRL+Space` changes the input method. It should all work.
+*If Anthy looks like it's just typing latin letters, make sure "Latin" isn't selected in the "Input Method"*
+
+##### IBus only types into *some* programs.
+Make sure that the environment variables are set properly in the above section.
+For me, I had to put them in my `bashrc`.
+
 
 ### Default page size for printing
 
@@ -281,7 +339,7 @@ You can get the binary from [here](https://docs.gitea.io/en-us/install-from-bina
 
 ## Steam
 
-## AoE III (original) using wine
+### AoE III (original) using wine
 Working with wine 5.19
 
 It should run out of the box, except with some sounds missing. AoE III is a 32-bit game and requires 32 bit drivers/libraries to function.
