@@ -231,6 +231,19 @@ Test what package owns it with: `pacman -Qo /path/to/file`
 
 If only one package owns it (the one you're trying to upgrade) then you can delete those files or rename them. Then try to update again.
 
+### Incorrect time between Windows and Linux on dual-boot system
+All operating systems on the machine read the time that is set within UEFI/BIOS.
+Windows interprets this as the local time
+Linux (by default) interprets this as UTC. (i.e. the time in Greenwich, UK)
+
+Windows sometimes likes to change the time in the BIOS by syncing it to its time servers.
+
+The easiest way to solve this conflict is to do the following on Linux:
+```bash
+timedatectl set-local-rtc 1 --adjust-system-clock
+```
+> Note: this command only works on `systemd` systems.
+This tells Linux to treat the BIOS time as local time rather than UTC.
 ## Server
 
 ### Static IP in command line
