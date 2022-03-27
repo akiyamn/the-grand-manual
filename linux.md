@@ -56,7 +56,13 @@ This can be changed by editing: `~/.config/fontconfig/fonts.conf` and adding the
 Run `fc-cache` to reset the system fonts and restart Alacritty.
 
 Try `echo 💩`.
-   
+
+### Awesome WM
+#### Awesome error logs
+
+Use this command to find where the messages are sent to:
+`ls -l /proc/$(pidof awesome)/fd/2`
+
 ### Qtile
 
 #### Qtile groups not in same order as screens.
